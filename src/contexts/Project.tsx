@@ -1,13 +1,14 @@
-import { createContext, useState } from 'react';
+import { createContext } from 'react';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 const ProjectContext = createContext({} as ProjectContext);
 
 export const ProjectProvider = ({
   children,
 }: ProjectProviderProps) => {
-  const [columns, setColumns] = useState<
+  const [columns, setColumns] = useLocalStorage<
     ColumnData[] | never[]
-  >([]);
+  >('instrello_pro_data', []);
 
   return (
     <ProjectContext.Provider
