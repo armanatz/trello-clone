@@ -31,6 +31,27 @@ export const onDeleteColumn = (
   }
 };
 
+export const onEditColumnName = (
+  columnId: Id,
+  name: string,
+  currentColumns: ColumnData[],
+) => {
+  if (!name || name.length === 0) {
+    return currentColumns;
+  }
+
+  const columnsCopy =
+    deepClone<ColumnData[]>(currentColumns);
+
+  const workingColIdx = columnsCopy.findIndex(
+    col => col.id === columnId,
+  );
+
+  columnsCopy[workingColIdx].title = name;
+
+  return columnsCopy;
+};
+
 export const onAddTask = (
   columnId: Id,
   currentColumns: ColumnData[],

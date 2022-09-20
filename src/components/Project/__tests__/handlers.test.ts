@@ -3,6 +3,7 @@ import {
   onAddTask,
   onDeleteColumn,
   onDeleteTask,
+  onEditColumnName,
 } from '../handlers';
 
 describe('column manipulation', () => {
@@ -37,15 +38,60 @@ describe('column manipulation', () => {
   });
 
   describe('column name editing', () => {
-    it.todo('changes column name correctly');
+    it('changes column name correctly', () => {
+      const currentColumns = [
+        {
+          id: 1,
+          title: 'New List',
+          tasks: [],
+        },
+      ];
 
-    it.todo(
-      'returns original column name if empty string supplied',
-    );
+      expect(
+        onEditColumnName(
+          1,
+          'List Name Changed',
+          currentColumns,
+        )[0],
+      ).toMatchObject({
+        ...currentColumns[0],
+        title: 'List Name Changed',
+      });
+    });
 
-    it.todo(
-      'returns original column name if undefined/null is supplied',
-    );
+    it('returns original column name if empty string supplied', () => {
+      const currentColumns = [
+        {
+          id: 1,
+          title: 'New List',
+          tasks: [],
+        },
+      ];
+
+      expect(
+        onEditColumnName(1, '', currentColumns),
+      ).toMatchObject(currentColumns);
+    });
+
+    it('returns original column name if undefined/null is supplied', () => {
+      const currentColumns = [
+        {
+          id: 1,
+          title: 'New List',
+          tasks: [],
+        },
+      ];
+
+      expect(
+        // @ts-ignore
+        onEditColumnName(1, undefined, currentColumns),
+      ).toMatchObject(currentColumns);
+
+      expect(
+        // @ts-ignore
+        onEditColumnName(1, null, currentColumns),
+      ).toMatchObject(currentColumns);
+    });
   });
 
   describe('deleting columns', () => {
