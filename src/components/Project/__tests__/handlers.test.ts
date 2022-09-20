@@ -1,4 +1,9 @@
-import { onAddNewColumn, onAddTask } from '../handlers';
+import {
+  onAddNewColumn,
+  onAddTask,
+  onDeleteColumn,
+  onDeleteTask,
+} from '../handlers';
 
 describe('column manipulation', () => {
   describe('adding columns', () => {
@@ -44,15 +49,50 @@ describe('column manipulation', () => {
   });
 
   describe('deleting columns', () => {
-    it.todo('deletes the correct column');
+    it('deletes the correct column', () => {
+      const currentColumns = [
+        {
+          id: 1,
+          title: 'New List',
+          tasks: [],
+        },
+        {
+          id: 2,
+          title: 'New List',
+          tasks: [],
+        },
+        {
+          id: 3,
+          title: 'New List',
+          tasks: [],
+        },
+      ];
 
-    it.todo(
-      'returns empty array if column data array is empty',
-    );
+      const newColumns = onDeleteColumn(2, currentColumns);
 
-    it.todo(
-      'throws error if column data array is undefined',
-    );
+      expect(newColumns).toHaveLength(2);
+      expect(newColumns).toMatchObject([
+        currentColumns[0],
+        currentColumns[2],
+      ]);
+    });
+
+    it('returns empty array if column data array is empty', () => {
+      const currentColumns: never[] = [];
+
+      expect(
+        onDeleteColumn(1, currentColumns),
+      ).toHaveLength(0);
+    });
+
+    it('throws error if column data array is undefined', () => {
+      const currentColumns = undefined;
+
+      expect(() => {
+        // @ts-ignore
+        onDeleteColumn(1, currentColumns);
+      }).toThrow();
+    });
   });
 });
 
@@ -109,6 +149,41 @@ describe('task manipulation', () => {
   });
 
   describe('deleting tasks', () => {
-    it.todo('deletes the correct task');
+    it('deletes the correct task', () => {
+      const now = Date.now();
+      const currentColumns = [
+        {
+          id: 1,
+          title: 'New List',
+          tasks: [
+            {
+              id: 1,
+              title: 'New Task',
+              notes: null,
+              createdAt: now,
+            },
+            {
+              id: 2,
+              title: 'New Task',
+              notes: null,
+              createdAt: now,
+            },
+            {
+              id: 3,
+              title: 'New Task',
+              notes: null,
+              createdAt: now,
+            },
+          ],
+        },
+      ];
+
+      expect(
+        onDeleteTask(1, 2, currentColumns)[0].tasks,
+      ).toMatchObject([
+        currentColumns[0].tasks[0],
+        currentColumns[0].tasks[2],
+      ]);
+    });
   });
 });
