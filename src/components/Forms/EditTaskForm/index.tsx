@@ -6,6 +6,8 @@ import React, {
 } from 'react';
 import ProjectContext from '../../../contexts/Project';
 
+import { onEditTask } from '../../Project/handlers';
+
 import '../style.css';
 
 const ColOptions = memo<ColOptionsProps>(({ columns }) => (
@@ -72,14 +74,14 @@ const EditTaskForm = ({
         }),
       };
 
-      const newColumns = {
+      const newColumns = onEditTask({
         currentColId,
         taskData,
         currentColumns: columns,
         formData,
-      };
+      });
 
-      console.log(newColumns);
+      setColumns(newColumns);
 
       if (onSubmit) {
         return onSubmit();
