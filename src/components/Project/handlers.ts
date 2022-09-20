@@ -1,5 +1,5 @@
 import deepClone from '../../utils/deepClone';
-import { getColumn } from '../../helpers';
+import { getColumn, getTask } from '../../helpers';
 
 export const onAddNewColumn = (
   currentColumns: ColumnData[],
@@ -89,6 +89,56 @@ export const onDeleteTask = (
   columnsCopy[workingColIdx].tasks = columnsCopy[
     workingColIdx
   ].tasks.filter(task => task.id !== taskId);
+
+  return columnsCopy;
+};
+
+export const onEditTask = ({
+  currentColId,
+  taskData,
+  currentColumns,
+  formData,
+}: OnEditTaskParams) => {
+  const columnsCopy =
+    deepClone<ColumnData[]>(currentColumns);
+
+  const workingColIdx = getColumn(
+    currentColId,
+    columnsCopy,
+  ) as number;
+
+  const workingTaskIdx = getTask(
+    currentColId,
+    taskData.id,
+    columnsCopy,
+  ) as number;
+
+  const currentTasks = columnsCopy[workingColIdx].tasks;
+
+  currentTasks[workingTaskIdx] = {
+    ...currentTasks[workingTaskIdx],
+    ...(formData.taskTitle && {
+      title: formData.taskTitle,
+    }),
+    ...(formData.taskNotes && {
+      notes: formData.taskNotes,
+    }),
+  };
+
+  if (formData.selectedColId) {
+    const columnToMoveToIdx = getColumn(
+      formData.selectedColId,
+      currentColumns,
+    ) as number;
+
+    columnsCopy[columnToMoveToIdx].tasks.push(
+      currentTasks[workingTaskIdx],
+    );
+
+    columnsCopy[workingColIdx].tasks = columnsCopy[
+      workingColIdx
+    ].tasks.filter(task => task.id !== taskData.id);
+  }
 
   return columnsCopy;
 };

@@ -42,3 +42,14 @@ interface EditTaskModalProps extends ModalStateProps {
     task: TaskData;
   } | null;
 }
+
+type OnEditTaskParams = {
+  currentColId: Id;
+  taskData: TaskData;
+  currentColumns: ColumnData[];
+  formData: {
+    taskTitle?: string;
+    taskNotes?: string | null;
+    selectedColId?: Id;
+  };
+};

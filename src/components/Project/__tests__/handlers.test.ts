@@ -4,6 +4,7 @@ import {
   onDeleteColumn,
   onDeleteTask,
   onEditColumnName,
+  onEditTask,
 } from '../handlers';
 
 describe('column manipulation', () => {
@@ -181,17 +182,132 @@ describe('task manipulation', () => {
   });
 
   describe('editing tasks', () => {
-    it.todo("edits chosen task's name correctly");
+    it("edits chosen task's name correctly", () => {
+      const now = Date.now();
+      const currentColumns = [
+        {
+          id: 1,
+          title: 'New List',
+          tasks: [
+            {
+              id: 1,
+              title: 'New Task',
+              notes: null,
+              createdAt: now,
+            },
+          ],
+        },
+      ];
 
-    it.todo(
-      'adds note to chosen task if task notes is currently null',
-    );
+      expect(
+        onEditTask({
+          currentColId: 1,
+          taskData: currentColumns[0].tasks[0],
+          currentColumns,
+          formData: {
+            taskTitle: 'Task Name Changed',
+          },
+        })[0].tasks[0],
+      ).toMatchObject({
+        ...currentColumns[0].tasks[0],
+        title: 'Task Name Changed',
+      });
+    });
 
-    it.todo("edits chosen task's notes correctly");
+    it('adds note to chosen task if task notes is currently null', () => {
+      const now = Date.now();
+      const currentColumns = [
+        {
+          id: 1,
+          title: 'New List',
+          tasks: [
+            {
+              id: 1,
+              title: 'New Task',
+              notes: null,
+              createdAt: now,
+            },
+          ],
+        },
+      ];
 
-    it.todo(
-      'correctly changes the column which the task belongs to',
-    );
+      expect(
+        onEditTask({
+          currentColId: 1,
+          taskData: currentColumns[0].tasks[0],
+          currentColumns,
+          formData: {
+            taskNotes: 'These are some notes',
+          },
+        })[0].tasks[0],
+      ).toMatchObject({
+        ...currentColumns[0].tasks[0],
+        notes: 'These are some notes',
+      });
+    });
+
+    it("edits chosen task's notes correctly", () => {
+      const now = Date.now();
+      const currentColumns = [
+        {
+          id: 1,
+          title: 'New List',
+          tasks: [
+            {
+              id: 1,
+              title: 'New Task',
+              notes: 'Old Notes',
+              createdAt: now,
+            },
+          ],
+        },
+      ];
+
+      expect(
+        onEditTask({
+          currentColId: 1,
+          taskData: currentColumns[0].tasks[0],
+          currentColumns,
+          formData: {
+            taskNotes: 'These are some notes',
+          },
+        })[0].tasks[0],
+      ).not.toMatchObject(currentColumns[0].tasks[0]);
+    });
+
+    it('correctly changes the column which the task belongs to', () => {
+      const now = Date.now();
+      const currentColumns = [
+        {
+          id: 1,
+          title: 'New List',
+          tasks: [
+            {
+              id: 1,
+              title: 'New Task',
+              notes: null,
+              createdAt: now,
+            },
+          ],
+        },
+        {
+          id: 2,
+          title: 'New List',
+          tasks: [],
+        },
+      ];
+
+      expect(
+        onEditTask({
+          currentColId: 1,
+          taskData: currentColumns[0].tasks[0],
+          currentColumns,
+          formData: {
+            selectedColId: 2,
+          },
+        })[1].tasks,
+      ).toHaveLength(1);
+    });
   });
 
   describe('deleting tasks', () => {
