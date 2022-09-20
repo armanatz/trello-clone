@@ -6,6 +6,33 @@
   height: calc(100vh - 5.7rem);
 }
 
+.project-column {
+  flex: 0 0 22rem;
+  display: flex;
+  flex-direction: column;
+  background-color: #e2e4e6;
+  max-height: calc(100vh - 11.8rem);
+  border-radius: 0.5rem;
+  margin-right: 1rem;
+}
+
+.project-column:last-of-type {
+  margin-right: 0;
+}
+
+.project-column-title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 2%;
+}
+
+.project-column-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #333;
+  margin: 1rem;
+}
+
 .add-column-btn {
   flex: 0 0 22rem;
   display: block;
@@ -23,11 +50,46 @@
   background-color: #005485;
 }
 
+.add-card-btn {
+  display: block;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #838c91;
+  padding: 1rem;
+  text-align: left;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  transition: background-color 150ms;
+}
+
+.add-card-btn:hover {
+  background-color: #cdd2d4;
+  color: #4d4d4d;
+  text-decoration: underline;
+}
+
+.delete-btn {
+  display: block;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #838c91;
+  padding: 1rem;
+}
+
+.delete-btn:hover {
+  color: red;
+}
+
 @supports (display: grid) {
   .project-container {
     display: grid;
     grid-auto-columns: 22rem;
     grid-auto-flow: column;
     grid-column-gap: 1rem;
+  }
+
+  .project-column {
+    display: grid;
+    grid-template-rows: auto minmax(auto, 1fr) auto;
   }
 }

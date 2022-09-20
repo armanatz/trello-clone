@@ -22,3 +22,9 @@ type TaskData = {
 interface TasksLayoutProps extends React.PropsWithChildren {
   column: ColumnData;
 }
+
+interface ProjectColumnProps
+  extends React.PropsWithChildren {
+  id: Id;
+  title?: string;
+}
