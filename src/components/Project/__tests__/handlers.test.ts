@@ -1,4 +1,4 @@
-import { onAddNewColumn } from '../handlers';
+import { onAddNewColumn, onAddTask } from '../handlers';
 
 describe('column manipulation', () => {
   describe('adding columns', () => {
@@ -58,9 +58,40 @@ describe('column manipulation', () => {
 
 describe('task manipulation', () => {
   describe('adding tasks', () => {
-    it.todo('adds a new task to empty task data array');
+    it('adds a new task to empty task data array', () => {
+      const currentColumns = [
+        {
+          id: 1,
+          title: 'New List',
+          tasks: [],
+        },
+      ];
 
-    it.todo('adds a new task to non-empty task data array');
+      const newColumns = onAddTask(1, currentColumns);
+
+      expect(newColumns[0].tasks).toHaveLength(1);
+    });
+
+    it('adds a new task to non-empty task data array', () => {
+      const currentColumns = [
+        {
+          id: 1,
+          title: 'New List',
+          tasks: [
+            {
+              id: 1,
+              title: 'New Task',
+              notes: null,
+              createdAt: Date.now(),
+            },
+          ],
+        },
+      ];
+
+      const newColumns = onAddTask(1, currentColumns);
+
+      expect(newColumns[0].tasks).toHaveLength(2);
+    });
   });
 
   describe('editing tasks', () => {
