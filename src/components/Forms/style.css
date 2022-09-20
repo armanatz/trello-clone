@@ -1,0 +1,29 @@
+.form-input {
+  width: 100%;
+  margin-top: 1em;
+}
+
+.form-input:not(:last-child) {
+  margin-bottom: 1em;
+}
+
+.form-input label {
+  display: inline-block;
+  margin-bottom: 0.5em;
+  font-weight: 500;
+}
+
+.form-input input,
+.form-input textarea,
+.form-input select {
+  font-size: 1rem;
+  width: 100%;
+  border: 1px solid #dcdcdc;
+  border-radius: 0.25rem;
+  box-shadow: none;
+  padding: 0.4rem 0.25rem;
+}
+
+.form-input textarea {
+  resize: vertical;
+}
