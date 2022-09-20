@@ -3,6 +3,7 @@ import React from 'react';
 import { ProjectProvider } from './contexts/Project';
 
 import NavBar from './components/NavBar';
+import ProjectContainer from './components/Project/Container';
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
       <NavBar />
       <main>
         <ProjectProvider>
-          <div></div>
+          <ProjectContainer />
         </ProjectProvider>
       </main>
     </div>

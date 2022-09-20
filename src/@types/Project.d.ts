@@ -18,3 +18,7 @@ type TaskData = {
   notes: string | null;
   createdAt: UnixTime;
 };
+
+interface TasksLayoutProps extends React.PropsWithChildren {
+  column: ColumnData;
+}
