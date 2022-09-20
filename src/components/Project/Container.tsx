@@ -5,6 +5,7 @@ import ProjectContext from '../../contexts/Project';
 import ProjectColumn from './Column';
 import ProjectCard from './Card';
 import Modal from '../Modal';
+import EditTaskForm from '../Forms/EditTaskForm';
 
 import { onAddNewColumn } from './handlers';
 
@@ -67,7 +68,12 @@ const ProjectContainer = () => {
           title="Edit Task"
           onClose={() => setModalState(DEFAULT_MODAL_STATE)}
         >
-          <p>This is a modal!</p>
+          <EditTaskForm
+            taskData={modalState.data.task}
+            onSubmit={() =>
+              setModalState(DEFAULT_MODAL_STATE)
+            }
+          />
         </Modal>
       ) : null}
       <section className="project-container">
