@@ -4,7 +4,11 @@ import { TrashIcon } from '@radix-ui/react-icons';
 import ProjectContext from '../../contexts/Project';
 import EditableText from '../EditableText';
 
-import { onAddTask, onDeleteColumn } from './handlers';
+import {
+  onAddTask,
+  onDeleteColumn,
+  onEditColumnName,
+} from './handlers';
 
 const ProjectColumn = ({
   id,
@@ -21,7 +25,9 @@ const ProjectColumn = ({
   const [showDelBtn, setShowDelBtn] = useState(false);
 
   const handleSetTitleValue = (value: string) => {
-    return setTitleValue(value);
+    setTitleValue(value);
+    const newColumns = onEditColumnName(id, value, columns);
+    return setColumns(newColumns);
   };
 
   const handleOnDelete = () =>
