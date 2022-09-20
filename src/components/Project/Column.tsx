@@ -3,6 +3,8 @@ import { TrashIcon } from '@radix-ui/react-icons';
 
 import ProjectContext from '../../contexts/Project';
 
+import { onAddTask } from './handlers';
+
 const ProjectColumn = ({
   id,
   title,
@@ -17,9 +19,10 @@ const ProjectColumn = ({
     console.log('I deleted');
   };
 
-  const handleOnAddCard = () => {
-    console.log('Card added');
-  };
+  const handleOnAddCard = () =>
+    setColumns((currentCols: ColumnData[]) =>
+      onAddTask(id, currentCols),
+    );
 
   return (
     <div

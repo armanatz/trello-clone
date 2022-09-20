@@ -28,3 +28,8 @@ interface ProjectColumnProps
   id: Id;
   title?: string;
 }
+
+interface ProjectCardProps extends React.PropsWithChildren {
+  id: Id;
+  colId: Id;
+}
