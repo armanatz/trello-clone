@@ -3,6 +3,8 @@ import { TrashIcon } from '@radix-ui/react-icons';
 
 import ProjectContext from '../../contexts/Project';
 
+import { onDeleteTask } from './handlers';
+
 const ProjectCard = ({
   children,
   id,
@@ -13,7 +15,9 @@ const ProjectCard = ({
   const [showDelBtn, setShowDelBtn] = useState(false);
 
   const handleOnDelete = () => {
-    console.log('Card deleted');
+    setColumns((currentColumns: ColumnData[]) =>
+      onDeleteTask(colId, id, currentColumns),
+    );
   };
 
   return (
