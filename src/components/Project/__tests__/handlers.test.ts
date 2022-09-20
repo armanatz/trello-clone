@@ -1,16 +1,34 @@
-import {} from '../handlers';
+import { onAddNewColumn } from '../handlers';
 
 describe('column manipulation', () => {
   describe('adding columns', () => {
-    it.todo('adds a new column to empty column data array');
+    it('adds a new column to empty column data array', () => {
+      const currentColumns: never[] = [];
+      expect(onAddNewColumn(currentColumns)).toHaveLength(
+        1,
+      );
+    });
 
-    it.todo(
-      'adds a new column to non-empty column data array',
-    );
+    it('adds a new column to non-empty column data array', () => {
+      const currentColumns = [
+        {
+          id: 1,
+          title: 'New List',
+          tasks: [],
+        },
+      ];
+      expect(onAddNewColumn(currentColumns)).toHaveLength(
+        2,
+      );
+    });
 
-    it.todo(
-      'errors out if trying to add to columns data array that is undefined',
-    );
+    it('errors out if trying to add to columns data array that is undefined', () => {
+      const currentColumns = undefined;
+      expect(() => {
+        // @ts-ignore
+        onAddNewColumn(currentColumns);
+      }).toThrow();
+    });
   });
 
   describe('column name editing', () => {
