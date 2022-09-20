@@ -2,6 +2,7 @@ import { useContext, useState } from 'react';
 import { TrashIcon } from '@radix-ui/react-icons';
 
 import ProjectContext from '../../contexts/Project';
+import EditableText from '../EditableText';
 
 import { onAddTask, onDeleteColumn } from './handlers';
 
@@ -13,7 +14,15 @@ const ProjectColumn = ({
   const { columns, setColumns } =
     useContext(ProjectContext);
 
+  const [titleValue, setTitleValue] = useState(
+    title || 'Enter column name',
+  );
+
   const [showDelBtn, setShowDelBtn] = useState(false);
+
+  const handleSetTitleValue = (value: string) => {
+    return setTitleValue(value);
+  };
 
   const handleOnDelete = () =>
     setColumns((currentColumns: ColumnData[]) =>
@@ -32,7 +41,11 @@ const ProjectColumn = ({
       onMouseLeave={() => setShowDelBtn(false)}
     >
       <div className="project-column-title-wrapper">
-        <h4 className="project-column-title">{title}</h4>
+        <EditableText
+          value={titleValue}
+          setValue={handleSetTitleValue}
+          textInputClasses="project-column-title"
+        />
         {showDelBtn ? (
           <button
             title="Delete List"
