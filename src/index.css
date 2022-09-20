@@ -39,4 +39,9 @@ main {
     grid-template-rows: 4rem 3rem auto;
     grid-row-gap: 0.8rem;
   }
+
+  .list,
+  .list-items li {
+    margin: 0;
+  }
 }

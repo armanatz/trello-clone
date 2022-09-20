@@ -38,7 +38,7 @@
   display: flex;
   flex-direction: column;
   align-content: start;
-  padding: 0 0.5rem 0.5rem;
+  justify-content: center;
   overflow-y: auto;
 }
 
@@ -51,6 +51,7 @@
   cursor: pointer;
   display: flex;
   justify-content: space-between;
+  max-width: 20rem;
 }
 
 .project-column-items .project-card .project-card-body {
@@ -81,6 +82,7 @@
   border-radius: 0.5rem;
   transition: background-color 150ms;
   text-align: left;
+  margin-left: 1rem;
 }
 
 .add-column-btn:hover {
@@ -137,6 +139,10 @@
 
   .project-column,
   .project-column-items .project-card {
+    margin: 0;
+  }
+
+  .add-column-btn {
     margin: 0;
   }
 }
