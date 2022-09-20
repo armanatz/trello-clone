@@ -21,6 +21,7 @@ type TaskData = {
 
 interface TasksLayoutProps extends React.PropsWithChildren {
   column: ColumnData;
+  onClickTask: (columnId: Id, taskData: TaskData) => void;
 }
 
 interface ProjectColumnProps
@@ -32,4 +33,12 @@ interface ProjectColumnProps
 interface ProjectCardProps extends React.PropsWithChildren {
   id: Id;
   colId: Id;
+  onClick?: () => void;
+}
+
+interface EditTaskModalProps extends ModalStateProps {
+  data: {
+    colId: Id;
+    task: TaskData;
+  } | null;
 }

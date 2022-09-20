@@ -1,33 +1,46 @@
-import { memo, useContext } from 'react';
+import { memo, useContext, useState } from 'react';
 
 import ProjectContext from '../../contexts/Project';
 
 import ProjectColumn from './Column';
 import ProjectCard from './Card';
+import Modal from '../Modal';
 
 import { onAddNewColumn } from './handlers';
 
 import './style.css';
 
-const TasksLayout = memo(({ column }: TasksLayoutProps) => {
-  return (
-    <>
-      {column.tasks?.map(task => (
-        <ProjectCard
-          key={task.id}
-          id={task.id}
-          colId={column.id}
-        >
-          <p>{task.title}</p>
-        </ProjectCard>
-      ))}
-    </>
-  );
-});
+const DEFAULT_MODAL_STATE: ModalStateProps = {
+  isOpen: false,
+  data: null,
+};
+
+const TasksLayout = memo(
+  ({ column, onClickTask }: TasksLayoutProps) => {
+    return (
+      <>
+        {column.tasks?.map(task => (
+          <ProjectCard
+            key={task.id}
+            id={task.id}
+            colId={column.id}
+            onClick={() => onClickTask(column.id, task)}
+          >
+            <p>{task.title}</p>
+          </ProjectCard>
+        ))}
+      </>
+    );
+  },
+);
 
 const ProjectContainer = () => {
   const { columns, setColumns } =
     useContext(ProjectContext);
+
+  const [modalState, setModalState] = useState(
+    DEFAULT_MODAL_STATE,
+  );
 
   const handleOnAddListBtnClick = () => {
     return setColumns((currentColumns: ColumnData[]) =>
@@ -35,24 +48,49 @@ const ProjectContainer = () => {
     );
   };
 
+  const handleOnClickTask = (
+    columnId: Id,
+    taskData: TaskData,
+  ) => {
+    return setModalState(prevState => ({
+      ...prevState,
+      isOpen: true,
+      data: { colId: columnId, task: taskData },
+    }));
+  };
+
   return (
-    <section className="project-container">
-      {columns?.map(col => (
-        <ProjectColumn
-          key={col.id}
-          id={col.id}
-          title={col.title}
+    <>
+      {modalState.isOpen && modalState.data ? (
+        <Modal
+          isOpen={modalState.isOpen}
+          title="Edit Task"
+          onClose={() => setModalState(DEFAULT_MODAL_STATE)}
         >
-          <TasksLayout column={col} />
-        </ProjectColumn>
-      ))}
-      <button
-        className="add-column-btn btn"
-        onClick={handleOnAddListBtnClick}
-      >
-        Add a list
-      </button>
-    </section>
+          <p>This is a modal!</p>
+        </Modal>
+      ) : null}
+      <section className="project-container">
+        {columns?.map(col => (
+          <ProjectColumn
+            key={col.id}
+            id={col.id}
+            title={col.title}
+          >
+            <TasksLayout
+              column={col}
+              onClickTask={handleOnClickTask}
+            />
+          </ProjectColumn>
+        ))}
+        <button
+          className="add-column-btn btn"
+          onClick={handleOnAddListBtnClick}
+        >
+          Add a list
+        </button>
+      </section>
+    </>
   );
 };
 

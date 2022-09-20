@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { TrashIcon } from '@radix-ui/react-icons';
 
 import ProjectContext from '../../contexts/Project';
@@ -9,12 +9,14 @@ const ProjectCard = ({
   children,
   id,
   colId,
+  onClick,
 }: ProjectCardProps) => {
   const { setColumns } = useContext(ProjectContext);
 
   const [showDelBtn, setShowDelBtn] = useState(false);
 
-  const handleOnDelete = () => {
+  const handleOnDelete = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setColumns((currentColumns: ColumnData[]) =>
       onDeleteTask(colId, id, currentColumns),
     );
@@ -25,6 +27,7 @@ const ProjectCard = ({
       className="project-card"
       onMouseEnter={() => setShowDelBtn(true)}
       onMouseLeave={() => setShowDelBtn(false)}
+      onClick={onClick}
     >
       <>
         <div
