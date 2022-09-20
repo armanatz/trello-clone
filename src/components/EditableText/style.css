@@ -1,0 +1,10 @@
+.editable-input {
+  background-color: transparent;
+  border: 0;
+  width: 100%;
+}
+
+.editable-input:hover {
+  background-color: #d3d3d3;
+  cursor: pointer;
+}
