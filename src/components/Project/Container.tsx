@@ -3,6 +3,7 @@ import { memo, useContext } from 'react';
 import ProjectContext from '../../contexts/Project';
 
 import ProjectColumn from './Column';
+import ProjectCard from './Card';
 
 import { onAddNewColumn } from './handlers';
 
@@ -12,9 +13,13 @@ const TasksLayout = memo(({ column }: TasksLayoutProps) => {
   return (
     <>
       {column.tasks?.map(task => (
-        <div key={task.id}>
+        <ProjectCard
+          key={task.id}
+          id={task.id}
+          colId={column.id}
+        >
           <p>{task.title}</p>
-        </div>
+        </ProjectCard>
       ))}
     </>
   );
